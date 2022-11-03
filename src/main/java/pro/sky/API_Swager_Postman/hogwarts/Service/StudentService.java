@@ -2,36 +2,35 @@ package pro.sky.API_Swager_Postman.hogwarts.Service;
 
 import org.springframework.stereotype.Service;
 import pro.sky.API_Swager_Postman.hogwarts.Model.Student;
+import pro.sky.API_Swager_Postman.hogwarts.Repositories.StudentRepository;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 @Service
 public class StudentService {
-    private Map <Long,Student> students = new HashMap<>();
-    private Long generatedStudentId = 0L;
+    private final StudentRepository studentRepository;
+
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
 
     public Student createStudent(Student student) {
-        student.setId(generatedStudentId++);
-        students.put(student.getId(), student);
+        studentRepository.save(student);
         return student;
     }
 
-    public Student getStudentById(Long Id) {
-        return students.get(Id);
+    public Student getStudentById(long id) {
+        return studentRepository.findById(id).orElse(null);
     }
 
-    public Student updateStudent(Long Id, Student student) {
-        students.put(Id, student);
+    public Student updateStudent(Student student) {
+        studentRepository.save(student);
         return student;
     }
     public List<Student> getStudentsByAge (int age) {
-        return students.values().stream().filter(f -> f.getId()== age).collect(Collectors.toList());
+        return studentRepository.findByAge(age);
     }
-    public Student deleteStudent(Long Id) {
-        return students.remove(Id);
+    public void deleteStudent(long id) {
+        studentRepository.deleteById(id);
     }
 }
 

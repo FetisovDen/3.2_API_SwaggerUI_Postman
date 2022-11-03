@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import pro.sky.API_Swager_Postman.hogwarts.Model.Faculty;
 import pro.sky.API_Swager_Postman.hogwarts.Service.FacultyService;
 
-import java.util.List;
+import java.util.Collection;
+
 
 @RestController
 @RequestMapping("/faculty")
@@ -17,14 +18,14 @@ public class FacultyController {
     }
 
     @PostMapping
-    public ResponseEntity createUser(@RequestBody Faculty faculty) {
-        Faculty createdUser = facultyService.createFaculty(faculty);
-        return ResponseEntity.ok(createdUser);
+    public ResponseEntity<Faculty> createUser(@RequestBody Faculty faculty) {
+        Faculty createdFaculty = facultyService.createFaculty(faculty);
+        return ResponseEntity.ok(createdFaculty);
     }
 
-    @GetMapping("{Id}")
-    public ResponseEntity getFaculty(@PathVariable Long Id) {
-        Faculty faculty = facultyService.getFacultyById(Id);
+    @GetMapping("/{id}")
+    public ResponseEntity<Faculty>  getFaculty(@PathVariable long id) {
+        Faculty faculty = facultyService.getFacultyById(id);
         if (faculty == null) {
             return ResponseEntity.notFound().build();
         }
@@ -32,14 +33,14 @@ public class FacultyController {
     }
 
     @PutMapping()
-    public ResponseEntity updateFaculty(@RequestBody Faculty faculty) {
-        Faculty updatedFaculty = facultyService.updateFaculty(faculty.getId(), faculty);
+    public ResponseEntity<Faculty>  updateFaculty(@RequestBody Faculty faculty) {
+        Faculty updatedFaculty = facultyService.updateFaculty(faculty);
         return ResponseEntity.ok(updatedFaculty);
     }
 
-    @GetMapping("{color}")
-    public ResponseEntity getFacultiesByColor(@PathVariable String color) {
-        List<Faculty> faculties = facultyService.getFacultyByColor(color);
+    @GetMapping()
+    public ResponseEntity<Collection<Faculty>>  getFacultiesByColor(@RequestParam String color) {
+        Collection<Faculty> faculties = facultyService.getFacultyByColor(color);
         if (faculties == null) {
             return ResponseEntity.notFound().build();
         }
@@ -47,9 +48,9 @@ public class FacultyController {
     }
 
     @DeleteMapping()
-    public ResponseEntity deleteFaculty(@RequestBody Faculty faculty) {
-        Faculty deleteFaculty = facultyService.deleteFaculty(faculty.getId());
-        return ResponseEntity.ok(deleteFaculty);
+    public  ResponseEntity<Faculty> deleteFaculty(@RequestBody Faculty faculty) {
+        facultyService.deleteFaculty(faculty.getId());
+        return ResponseEntity.ok(faculty);
     }
 }
 
