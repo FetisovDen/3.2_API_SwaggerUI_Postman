@@ -1,8 +1,9 @@
-package pro.sky.API_Swager_Postman.hogwarts.Service;
+package pro.sky.api_swager_postman.hogwarts.service;
 
 import org.springframework.stereotype.Service;
-import pro.sky.API_Swager_Postman.hogwarts.Model.Student;
-import pro.sky.API_Swager_Postman.hogwarts.Repositories.StudentRepository;
+import org.webjars.NotFoundException;
+import pro.sky.api_swager_postman.hogwarts.model.Student;
+import pro.sky.api_swager_postman.hogwarts.repositories.StudentRepository;
 
 import java.util.List;
 @Service
@@ -19,10 +20,11 @@ public class StudentService {
     }
 
     public Student getStudentById(long id) {
-        return studentRepository.findById(id).orElse(null);
+        return studentRepository.findById(id).orElseThrow(()->new NotFoundException("Такого индификатора не существует!"));
     }
 
     public Student updateStudent(Student student) {
+        studentRepository.findById(student.getId()).orElseThrow(()->new NotFoundException("Такого студента не существует!"));
         studentRepository.save(student);
         return student;
     }

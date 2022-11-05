@@ -1,9 +1,9 @@
-package pro.sky.API_Swager_Postman.hogwarts.Controller;
+package pro.sky.api_swager_postman.hogwarts.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pro.sky.API_Swager_Postman.hogwarts.Model.Student;
-import pro.sky.API_Swager_Postman.hogwarts.Service.StudentService;
+import pro.sky.api_swager_postman.hogwarts.model.Student;
+import pro.sky.api_swager_postman.hogwarts.service.StudentService;
 
 import java.util.List;
 
@@ -25,9 +25,6 @@ public class StudentController {
     @GetMapping("/{id}")
     public ResponseEntity<Student> getStudent(@PathVariable("id") long id) {
         Student student = studentService.getStudentById(id);
-        if (student == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(student);
     }
 
@@ -38,11 +35,8 @@ public class StudentController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<Student>> getStudent(@RequestParam int age) {
+    public ResponseEntity<List<Student>> getStudentByAge(@RequestParam int age) {
         List<Student> student = studentService.getStudentsByAge(age);
-        if (student == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(student);
     }
 

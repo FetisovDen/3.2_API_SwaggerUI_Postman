@@ -1,8 +1,9 @@
-package pro.sky.API_Swager_Postman.hogwarts.Service;
+package pro.sky.api_swager_postman.hogwarts.service;
 
 import org.springframework.stereotype.Service;
-import pro.sky.API_Swager_Postman.hogwarts.Model.Faculty;
-import pro.sky.API_Swager_Postman.hogwarts.Repositories.FacultyRepository;
+import org.webjars.NotFoundException;
+import pro.sky.api_swager_postman.hogwarts.model.Faculty;
+import pro.sky.api_swager_postman.hogwarts.repositories.FacultyRepository;
 
 import java.util.Collection;
 
@@ -20,16 +21,15 @@ public class FacultyService {
     }
 
     public Faculty getFacultyById(long id) {
-        return facultyRepository.findById(id).orElse(null);
+        return facultyRepository.findById(id).orElseThrow(() -> new NotFoundException("Такого индификатора не существует!"));
     }
 
     public Faculty updateFaculty(Faculty faculty) {
-        if (facultyRepository.countFacultiesById(faculty)){
-            throw new RuntimeException("такого факультета нет");
-        }
-        else {facultyRepository.save(faculty);
-        return faculty;}
+        facultyRepository.findById(faculty.getId()).orElseThrow(() -> new NotFoundException("Такого факультета не существует!"));
+        facultyRepository.save(faculty);
+        return faculty;
     }
+
 
     public Collection<Faculty> getFacultyByColor(String color) {
         return facultyRepository.findByColor(color);

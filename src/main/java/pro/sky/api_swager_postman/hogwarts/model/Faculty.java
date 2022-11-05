@@ -1,4 +1,4 @@
-package pro.sky.API_Swager_Postman.hogwarts.Model;
+package pro.sky.api_swager_postman.hogwarts.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

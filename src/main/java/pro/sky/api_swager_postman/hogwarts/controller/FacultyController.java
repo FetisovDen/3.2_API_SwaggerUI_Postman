@@ -1,9 +1,9 @@
-package pro.sky.API_Swager_Postman.hogwarts.Controller;
+package pro.sky.api_swager_postman.hogwarts.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pro.sky.API_Swager_Postman.hogwarts.Model.Faculty;
-import pro.sky.API_Swager_Postman.hogwarts.Service.FacultyService;
+import pro.sky.api_swager_postman.hogwarts.model.Faculty;
+import pro.sky.api_swager_postman.hogwarts.service.FacultyService;
 
 import java.util.Collection;
 
@@ -27,9 +27,6 @@ public class FacultyController {
     @GetMapping("/{id}")
     public ResponseEntity<Faculty>  getFaculty(@PathVariable long id) {
         Faculty faculty = facultyService.getFacultyById(id);
-        if (faculty == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(faculty);
     }
 
@@ -42,9 +39,6 @@ public class FacultyController {
     @GetMapping()
     public ResponseEntity<Collection<Faculty>>  getFacultiesByColor(@RequestParam String color) {
         Collection<Faculty> faculties = facultyService.getFacultyByColor(color);
-        if (faculties == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(faculties);
     }
 
