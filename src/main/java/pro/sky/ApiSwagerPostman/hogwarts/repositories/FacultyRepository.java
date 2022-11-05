@@ -1,8 +1,8 @@
-package pro.sky.api_swager_postman.hogwarts.repositories;
+package pro.sky.ApiSwagerPostman.hogwarts.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import pro.sky.api_swager_postman.hogwarts.model.Faculty;
+import pro.sky.ApiSwagerPostman.hogwarts.model.Faculty;
 
 import java.util.List;
 

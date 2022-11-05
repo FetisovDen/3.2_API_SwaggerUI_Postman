@@ -1,9 +1,9 @@
-package pro.sky.api_swager_postman.hogwarts.service;
+package pro.sky.ApiSwagerPostman.hogwarts.service;
 
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
-import pro.sky.api_swager_postman.hogwarts.model.Student;
-import pro.sky.api_swager_postman.hogwarts.repositories.StudentRepository;
+import pro.sky.ApiSwagerPostman.hogwarts.model.Student;
+import pro.sky.ApiSwagerPostman.hogwarts.repositories.StudentRepository;
 
 import java.util.List;
 @Service

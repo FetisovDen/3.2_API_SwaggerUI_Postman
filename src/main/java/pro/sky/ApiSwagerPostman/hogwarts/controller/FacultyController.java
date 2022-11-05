@@ -1,9 +1,9 @@
-package pro.sky.api_swager_postman.hogwarts.controller;
+package pro.sky.ApiSwagerPostman.hogwarts.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pro.sky.api_swager_postman.hogwarts.model.Faculty;
-import pro.sky.api_swager_postman.hogwarts.service.FacultyService;
+import pro.sky.ApiSwagerPostman.hogwarts.model.Faculty;
+import pro.sky.ApiSwagerPostman.hogwarts.service.FacultyService;
 
 import java.util.Collection;
 
