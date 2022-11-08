@@ -1,9 +1,10 @@
-package pro.sky.ApiSwagerPostman.hogwarts.controller;
+package pro.sky.apiSwagerPostman.hogwarts.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pro.sky.ApiSwagerPostman.hogwarts.model.Faculty;
-import pro.sky.ApiSwagerPostman.hogwarts.service.FacultyService;
+import pro.sky.apiSwagerPostman.hogwarts.model.Faculty;
+import pro.sky.apiSwagerPostman.hogwarts.model.Student;
+import pro.sky.apiSwagerPostman.hogwarts.service.FacultyService;
 
 import java.util.Collection;
 
@@ -47,5 +48,18 @@ public class FacultyController {
         facultyService.deleteFaculty(faculty.getId());
         return ResponseEntity.ok(faculty);
     }
+    @GetMapping("/findByColorOrName")
+    public ResponseEntity<Collection<Faculty>>  getFacultiesByColorOrName(@RequestParam(required = false) String color,
+                                                                          @RequestParam(required = false) String name ) {
+        Collection<Faculty> faculties = facultyService.getFacultyByColorOrName(color,name);
+        return ResponseEntity.ok(faculties);
+    }
+
+    @GetMapping("/getFacultyByStudent")
+    public ResponseEntity<Faculty> getFacultyByStudent(@RequestBody Student student) {
+        Faculty faculty = facultyService.getFacultyByStudent(student);
+        return ResponseEntity.ok(faculty);
+    }
 }
+
 

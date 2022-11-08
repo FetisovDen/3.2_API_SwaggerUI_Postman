@@ -1,4 +1,4 @@
-package pro.sky.ApiSwagerPostman;
+package pro.sky.apiSwagerPostman;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springframework.boot.SpringApplication;

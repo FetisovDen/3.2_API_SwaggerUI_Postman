@@ -1,9 +1,10 @@
-package pro.sky.ApiSwagerPostman.hogwarts.service;
+package pro.sky.apiSwagerPostman.hogwarts.service;
 
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
-import pro.sky.ApiSwagerPostman.hogwarts.model.Faculty;
-import pro.sky.ApiSwagerPostman.hogwarts.repositories.FacultyRepository;
+import pro.sky.apiSwagerPostman.hogwarts.model.Faculty;
+import pro.sky.apiSwagerPostman.hogwarts.model.Student;
+import pro.sky.apiSwagerPostman.hogwarts.repositories.FacultyRepository;
 
 import java.util.Collection;
 
@@ -38,4 +39,14 @@ public class FacultyService {
     public void deleteFaculty(long id) {
         facultyRepository.deleteById(id);
     }
+
+    public Collection<Faculty> getFacultyByColorOrName(String color, String name) {
+        return facultyRepository.findByColorOrNameIgnoreCase(color,name);
+    }
+
+    public Faculty getFacultyByStudent(Student student){
+        return facultyRepository.findFacultyByStudentContaining(student);
+    }
+
 }
+

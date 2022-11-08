@@ -1,10 +1,11 @@
-package pro.sky.ApiSwagerPostman.hogwarts.service;
+package pro.sky.apiSwagerPostman.hogwarts.service;
 
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
-import pro.sky.ApiSwagerPostman.hogwarts.model.Student;
-import pro.sky.ApiSwagerPostman.hogwarts.repositories.StudentRepository;
+import pro.sky.apiSwagerPostman.hogwarts.model.Student;
+import pro.sky.apiSwagerPostman.hogwarts.repositories.StudentRepository;
 
+import java.util.Collection;
 import java.util.List;
 @Service
 public class StudentService {
@@ -33,6 +34,14 @@ public class StudentService {
     }
     public void deleteStudent(long id) {
         studentRepository.deleteById(id);
+    }
+
+    public Collection<Student> findByAgeBetween (int min, int max){
+        return studentRepository.findByAgeBetween(min,max);
+    }
+
+    public Collection<Student> findStudentsByFaculty(long id){
+        return studentRepository.findByFaculty_Id(id);
     }
 }
 

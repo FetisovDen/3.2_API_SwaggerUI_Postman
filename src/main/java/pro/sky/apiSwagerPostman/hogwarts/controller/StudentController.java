@@ -1,10 +1,11 @@
-package pro.sky.ApiSwagerPostman.hogwarts.controller;
+package pro.sky.apiSwagerPostman.hogwarts.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pro.sky.ApiSwagerPostman.hogwarts.model.Student;
-import pro.sky.ApiSwagerPostman.hogwarts.service.StudentService;
+import pro.sky.apiSwagerPostman.hogwarts.model.Student;
+import pro.sky.apiSwagerPostman.hogwarts.service.StudentService;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -44,5 +45,16 @@ public class StudentController {
     public ResponseEntity<Student> deleteStudent(@RequestBody Student student) {
         studentService.deleteStudent(student.getId());
         return ResponseEntity.ok(student);
+    }
+    @GetMapping("/age_between")
+    public ResponseEntity<Collection<Student>> findByAgeBetween(@RequestParam int min,
+                                                                @RequestParam int max) {
+        Collection<Student> student = studentService.findByAgeBetween(min,max);
+        return ResponseEntity.ok(student);
+    }
+    @GetMapping("/studentsByFacultyId/{id}")
+    public ResponseEntity<Collection<Student>> findStudentsByFaculty(@PathVariable("id") long id) {
+        Collection<Student> students = studentService.findStudentsByFaculty(id);
+        return ResponseEntity.ok(students);
     }
 }
