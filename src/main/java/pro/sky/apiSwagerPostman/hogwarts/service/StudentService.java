@@ -21,7 +21,7 @@ public class StudentService {
     }
 
     public Student getStudentById(long id) {
-        return studentRepository.findById(id).orElseThrow(()->new NotFoundException("Такого индификатора не существует!"));
+        return studentRepository.findById(id).orElseThrow(()->new NotFoundException("Такого студента не существует!"));
     }
 
     public Student updateStudent(Student student) {

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import pro.sky.apiSwagerPostman.hogwarts.model.Faculty;
 import pro.sky.apiSwagerPostman.hogwarts.model.Student;
 import pro.sky.apiSwagerPostman.hogwarts.service.FacultyService;
+import pro.sky.apiSwagerPostman.hogwarts.service.StudentService;
 
 import java.util.Collection;
 
@@ -14,9 +15,11 @@ import java.util.Collection;
 public class FacultyController {
 
     private final FacultyService facultyService;
+    private final StudentService studentService;
 
-    public FacultyController(FacultyService facultyService) {
+    public FacultyController(FacultyService facultyService,StudentService studentService) {
         this.facultyService = facultyService;
+        this.studentService = studentService;
     }
 
     @PostMapping
@@ -43,23 +46,24 @@ public class FacultyController {
         return ResponseEntity.ok(faculties);
     }
 
-    @DeleteMapping()
-    public  ResponseEntity<Faculty> deleteFaculty(@RequestBody Faculty faculty) {
-        facultyService.deleteFaculty(faculty.getId());
-        return ResponseEntity.ok(faculty);
+    @DeleteMapping("/{facultyId}")
+    public  ResponseEntity<Faculty> deleteFaculty(@PathVariable long facultyId) {
+        facultyService.deleteFaculty(facultyId);
+        return ResponseEntity.ok().build();
     }
     @GetMapping("/findByColorOrName")
-    public ResponseEntity<Collection<Faculty>>  getFacultiesByColorOrName(@RequestParam(required = false) String color,
-                                                                          @RequestParam(required = false) String name ) {
-        Collection<Faculty> faculties = facultyService.getFacultyByColorOrName(color,name);
+    public ResponseEntity<Collection<Faculty>>  getFacultiesByColorOrName(@RequestParam String nameOrColor) {
+        Collection<Faculty> faculties = facultyService.getFacultyByColorOrName(nameOrColor);
         return ResponseEntity.ok(faculties);
     }
 
-    @GetMapping("/getFacultyByStudent")
-    public ResponseEntity<Faculty> getFacultyByStudent(@RequestBody Student student) {
-        Faculty faculty = facultyService.getFacultyByStudent(student);
-        return ResponseEntity.ok(faculty);
+    @GetMapping("/{id}/students")
+    public ResponseEntity<Collection<Student>> findStudentsByFaculty(@PathVariable("id") long id) {
+        Collection<Student> students = studentService.findStudentsByFaculty(id);
+        return ResponseEntity.ok(students);
     }
+
+
 }
 
 
