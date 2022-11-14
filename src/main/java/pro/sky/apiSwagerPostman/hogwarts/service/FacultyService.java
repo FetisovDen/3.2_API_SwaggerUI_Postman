@@ -7,7 +7,6 @@ import pro.sky.apiSwagerPostman.hogwarts.repositories.FacultyRepository;
 import pro.sky.apiSwagerPostman.hogwarts.repositories.StudentRepository;
 
 import java.util.Collection;
-import java.util.List;
 
 @Service
 public class FacultyService {

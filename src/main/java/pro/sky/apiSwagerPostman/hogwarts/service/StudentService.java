@@ -29,7 +29,7 @@ public class StudentService {
         studentRepository.save(student);
         return student;
     }
-    public List<Student> getStudentsByAge (int age) {
+    public Collection<Student> getStudentsByAge (int age) {
         return studentRepository.findByAge(age);
     }
     public void deleteStudent(long id) {

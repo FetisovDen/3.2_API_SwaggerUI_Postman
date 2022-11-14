@@ -1,5 +1,7 @@
 package pro.sky.apiSwagerPostman.hogwarts.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
@@ -11,7 +13,7 @@ public class Faculty {
     private Long id;
     private String name;
     private String color;
-
+    @JsonIgnore
     @OneToMany (mappedBy = "faculty")
     private Collection<Student> student;
 

@@ -40,8 +40,8 @@ public class StudentController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<Student>> getStudentByAge(@RequestParam int age) {
-        List<Student> student = studentService.getStudentsByAge(age);
+    public ResponseEntity<Collection<Student>> getStudentByAge(@RequestParam int age) {
+        Collection<Student> student = studentService.getStudentsByAge(age);
         return ResponseEntity.ok(student);
     }
 
