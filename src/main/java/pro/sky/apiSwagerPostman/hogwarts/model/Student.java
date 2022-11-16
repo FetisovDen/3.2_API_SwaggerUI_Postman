@@ -55,12 +55,12 @@ public class Student {
         if (this == o) return true;
         if (!(o instanceof Student)) return false;
         Student student = (Student) o;
-        return getAge() == student.getAge() && getId().equals(student.getId()) && getName().equals(student.getName()) && getFaculty().equals(student.getFaculty());
+        return getId().equals(student.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getAge(), getFaculty());
+        return Objects.hash(getId());
     }
 
     @Override

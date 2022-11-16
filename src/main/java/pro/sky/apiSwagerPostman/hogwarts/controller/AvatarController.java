@@ -1,5 +1,6 @@
 package pro.sky.apiSwagerPostman.hogwarts.controller;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +18,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping()
@@ -33,6 +37,7 @@ public class AvatarController {
         avatarService.uploadAvatar(studentId, avatar);
         return ResponseEntity.ok().build();
     }
+
     @GetMapping(value = "/{id}/avatar-from-db")
     public ResponseEntity<byte[]> downloadAvatar(@PathVariable Long id) {
         Avatar avatar = avatarService.findAvatar(id);
@@ -41,16 +46,27 @@ public class AvatarController {
         headers.setContentLength(avatar.getData().length);
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getData());
     }
+
     @GetMapping(value = "/{id}/avatar-from-file")
-    public void downloadAvatar(@PathVariable Long id, HttpServletResponse response) throws IOException{
+    public void downloadAvatar(@PathVariable Long id, HttpServletResponse response) throws IOException {
         Avatar avatar = avatarService.findAvatar(id);
         Path path = Path.of(avatar.getFilePath());
-        try(InputStream is = Files.newInputStream(path);
-            OutputStream os = response.getOutputStream();) {
+        try (InputStream is = Files.newInputStream(path);
+             OutputStream os = response.getOutputStream();) {
             response.setStatus(200);
             response.setContentType(avatar.getMediaType());
             response.setContentLength((int) avatar.getFileSize());
             is.transferTo(os);
         }
+    }
+
+    @GetMapping(value = "/getAllAvatar/")
+    public ResponseEntity<List<Avatar>> getAllAvatar(@RequestParam Integer page, @RequestParam Integer size) {
+            Page<Avatar> avatar = avatarService.findAllAvatar(page, size);
+            HttpHeaders headers = new HttpHeaders();
+            for (int i = 0;i <= avatar.getSize()-1;i++){
+            headers.setContentType(MediaType.parseMediaType(avatar.getContent().get(i).getMediaType()));
+            headers.setContentLength(avatar.getContent().get(i).getData().length);}
+            return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getContent());
     }
 }

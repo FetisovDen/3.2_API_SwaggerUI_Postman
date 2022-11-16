@@ -8,7 +8,6 @@ import pro.sky.apiSwagerPostman.hogwarts.service.FacultyService;
 import pro.sky.apiSwagerPostman.hogwarts.service.StudentService;
 
 import java.util.Collection;
-import java.util.List;
 
 @RestController
 @RequestMapping("/student")

@@ -3,10 +3,14 @@ package pro.sky.apiSwagerPostman.hogwarts.service;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 import pro.sky.apiSwagerPostman.hogwarts.model.Student;
+import pro.sky.apiSwagerPostman.hogwarts.model.StudentsByCategory;
 import pro.sky.apiSwagerPostman.hogwarts.repositories.StudentRepository;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 @Service
 public class StudentService {
     private final StudentRepository studentRepository;
@@ -43,5 +47,21 @@ public class StudentService {
     public Collection<Student> findStudentsByFaculty(long id){
         return studentRepository.findByFaculty_Id(id);
     }
+
+    public Integer countStudents() {
+        return studentRepository.countStudents();
+
+    }
+
+    public Double avgAgeStudents() {
+        return studentRepository.avgAgeStudents();
+    }
+
+    public List<Student> lastFiveStudentsById() {
+        Integer count = studentRepository.countStudents();
+        if(count<5){count = 5;}
+        return studentRepository.lastFiveStudentsById(count);
+    }
+
 }
 
