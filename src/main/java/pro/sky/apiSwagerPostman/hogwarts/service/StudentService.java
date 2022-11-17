@@ -1,0 +1,67 @@
+package pro.sky.apiSwagerPostman.hogwarts.service;
+
+import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
+import pro.sky.apiSwagerPostman.hogwarts.model.Student;
+import pro.sky.apiSwagerPostman.hogwarts.model.StudentsByCategory;
+import pro.sky.apiSwagerPostman.hogwarts.repositories.StudentRepository;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+@Service
+public class StudentService {
+    private final StudentRepository studentRepository;
+
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
+
+    public Student createStudent(Student student) {
+        studentRepository.save(student);
+        return student;
+    }
+
+    public Student getStudentById(long id) {
+        return studentRepository.findById(id).orElseThrow(()->new NotFoundException("Такого студента не существует!"));
+    }
+
+    public Student updateStudent(Student student) {
+        studentRepository.findById(student.getId()).orElseThrow(()->new NotFoundException("Такого студента не существует!"));
+        studentRepository.save(student);
+        return student;
+    }
+    public Collection<Student> getStudentsByAge (int age) {
+        return studentRepository.findByAge(age);
+    }
+    public void deleteStudent(long id) {
+        studentRepository.deleteById(id);
+    }
+
+    public Collection<Student> findByAgeBetween (int min, int max){
+        return studentRepository.findByAgeBetween(min,max);
+    }
+
+    public Collection<Student> findStudentsByFaculty(long id){
+        return studentRepository.findByFaculty_Id(id);
+    }
+
+    public Integer countStudents() {
+        return studentRepository.countStudents();
+
+    }
+
+    public Double avgAgeStudents() {
+        return studentRepository.avgAgeStudents();
+    }
+
+    public List<Student> lastFiveStudentsById() {
+        Integer count = studentRepository.countStudents();
+        if(count<5){count = 5;}
+        return studentRepository.lastFiveStudentsById(count);
+    }
+
+}
+
