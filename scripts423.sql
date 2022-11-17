@@ -4,6 +4,6 @@ FROM students AS s
 
 SELECT s.name, s.age, a.file_path
 FROM students AS s
-         RIGHT JOIN avatars AS a ON s.id = a.student_id
+         INNER JOIN avatars AS a ON s.id = a.student_id
 
 
