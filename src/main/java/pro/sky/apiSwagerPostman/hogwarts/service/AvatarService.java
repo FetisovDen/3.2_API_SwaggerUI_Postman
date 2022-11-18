@@ -1,11 +1,12 @@
 package pro.sky.apiSwagerPostman.hogwarts.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.webjars.NotFoundException;
 import pro.sky.apiSwagerPostman.hogwarts.model.Avatar;
 import pro.sky.apiSwagerPostman.hogwarts.model.Student;
 import pro.sky.apiSwagerPostman.hogwarts.repositories.AvatarRepository;
@@ -18,7 +19,6 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Optional;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -27,6 +27,8 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 public class AvatarService {
     private final AvatarRepository avatarRepository;
     private final StudentRepository studentRepository;
+
+    Logger logger = LoggerFactory.getLogger(AvatarService.class);
 
     public AvatarService(AvatarRepository avatarRepository, StudentRepository studentRepository) {
         this.avatarRepository = avatarRepository;
@@ -38,6 +40,7 @@ public class AvatarService {
 
 
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
+        logger.info("Was invoked method for upload avatar");
         Student student = studentRepository.getById(studentId);
         Path filePath = Path.of(avatarsDir, student + "." + getExtensions(avatarFile.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
@@ -60,6 +63,7 @@ public class AvatarService {
     }
 
     private byte[] generateDataForDB(Path filePath) throws IOException {
+        logger.info("Was invoked method generateDataForDB");
         try (
                 InputStream is = Files.newInputStream(filePath);
                 BufferedInputStream bis = new BufferedInputStream(is, 1024);
@@ -81,15 +85,18 @@ public class AvatarService {
 
 
     private String getExtensions(String fileName) {
+        logger.info("Was invoked method getExtensions");
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
 
     public Avatar findAvatar(Long id) {
+        logger.info("Was invoked method findAvatar");
         return avatarRepository.findByStudentId(id).orElse(new Avatar());
     }
 
     public Page<Avatar> findAllAvatar(Integer page, Integer size) {
+        logger.info("Was invoked method findAllAvatar");
         PageRequest pageRequest = PageRequest.of(page-1,size);
         return avatarRepository.findAll(pageRequest);
     }
