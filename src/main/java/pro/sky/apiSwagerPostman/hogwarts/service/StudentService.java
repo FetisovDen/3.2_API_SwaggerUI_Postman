@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class StudentService {
     private final StudentRepository studentRepository;
-    Logger logger = LoggerFactory.getLogger(AvatarService.class);
+    private final Logger logger = LoggerFactory.getLogger(AvatarService.class);
 
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
