@@ -2,13 +2,16 @@ package pro.sky.apiSwagerPostman.hogwarts.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.webjars.NotFoundException;
 import pro.sky.apiSwagerPostman.hogwarts.model.Faculty;
 import pro.sky.apiSwagerPostman.hogwarts.repositories.FacultyRepository;
 import pro.sky.apiSwagerPostman.hogwarts.repositories.StudentRepository;
 
 import java.util.Collection;
+import java.util.Comparator;
 
 @Service
 public class FacultyService {
@@ -64,5 +67,11 @@ public class FacultyService {
         return facultyRepository.findFacultyByStudentId(id);
     }
 
+    public String getLongestFacultyName() {
+        return facultyRepository.findAll().stream()
+                .map(Faculty::getName)
+                .max(String::compareTo)
+                .orElseThrow(() -> new NotFoundException("Факультетов нет"));
+    }
 }
 

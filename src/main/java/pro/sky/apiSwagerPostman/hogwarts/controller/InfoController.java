@@ -20,9 +20,16 @@ public class InfoController {
         this.infoService = infoService;
     }
 
-    @GetMapping()
+    @GetMapping("/getPort")
     public String getPort() {
         logger.info("Was invoked method for get port");
         return infoService.getPort();
     }
+
+    @GetMapping("/getDouble")
+    public Long getDouble() {
+        return infoService.getDouble();
+    }
+
+
 }

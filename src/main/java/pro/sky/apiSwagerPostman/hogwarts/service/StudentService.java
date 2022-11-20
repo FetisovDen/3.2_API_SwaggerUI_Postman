@@ -9,6 +9,7 @@ import pro.sky.apiSwagerPostman.hogwarts.repositories.StudentRepository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -80,5 +81,18 @@ public class StudentService {
         return studentRepository.lastFiveStudentsById(count);
     }
 
+    public List<String> getAllStudentByNameOnA() {
+        return studentRepository.findAll().stream()
+                .map(Student::getName)
+                .sorted()
+                .map(String::toUpperCase)
+                .filter(s -> s.startsWith("A"))
+                .collect(Collectors.toList());
+    }
+
+    public Double getAvgAgeAllStudents() {
+        return studentRepository.findAll().stream()
+                .collect(Collectors.averagingInt(Student::getAge));
+    }
 }
 
