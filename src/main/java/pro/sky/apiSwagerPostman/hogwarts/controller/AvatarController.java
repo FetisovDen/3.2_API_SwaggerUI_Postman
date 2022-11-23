@@ -61,12 +61,17 @@ public class AvatarController {
     }
 
     @GetMapping(value = "/getAllAvatar/")
-    public ResponseEntity<List<Avatar>> getAllAvatar(@RequestParam Integer page, @RequestParam Integer size) {
-            Page<Avatar> avatar = avatarService.findAllAvatar(page, size);
-            HttpHeaders headers = new HttpHeaders();
-            for (int i = 0;i <= avatar.getSize()-1;i++){
-            headers.setContentType(MediaType.parseMediaType(avatar.getContent().get(i).getMediaType()));
-            headers.setContentLength(avatar.getContent().get(i).getData().length);}
-            return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getContent());
+    public void getAllAvatar(@RequestParam Integer page, @RequestParam Integer size,HttpServletResponse response) throws IOException {
+            List<Avatar> avatar = avatarService.findAllAvatar(page, size);
+            for(int i = 0;i<= avatar.size()-1;i++){
+        Path path = Path.of(avatar.get(i).getFilePath());
+        try (InputStream is = Files.newInputStream(path);
+             OutputStream os = response.getOutputStream();) {
+            response.setStatus(200);
+            response.setContentType(avatar.get(i).getMediaType());
+            response.setContentLength((int) avatar.get(i).getFileSize());
+            is.transferTo(os);
+        }}
+
     }
 }

@@ -1,11 +1,9 @@
 package pro.sky.apiSwagerPostman.hogwarts.service;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.webjars.NotFoundException;
 import pro.sky.apiSwagerPostman.hogwarts.model.Avatar;
 import pro.sky.apiSwagerPostman.hogwarts.model.Student;
 import pro.sky.apiSwagerPostman.hogwarts.repositories.AvatarRepository;
@@ -18,7 +16,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Optional;
+import java.util.List;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -89,8 +87,8 @@ public class AvatarService {
         return avatarRepository.findByStudentId(id).orElse(new Avatar());
     }
 
-    public Page<Avatar> findAllAvatar(Integer page, Integer size) {
+    public List<Avatar> findAllAvatar(Integer page, Integer size) {
         PageRequest pageRequest = PageRequest.of(page-1,size);
-        return avatarRepository.findAll(pageRequest);
+        return avatarRepository.findAll(pageRequest).getContent();
     }
 }
