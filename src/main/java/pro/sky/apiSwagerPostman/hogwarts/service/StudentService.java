@@ -7,7 +7,9 @@ import org.webjars.NotFoundException;
 import pro.sky.apiSwagerPostman.hogwarts.model.Student;
 import pro.sky.apiSwagerPostman.hogwarts.repositories.StudentRepository;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -94,5 +96,37 @@ public class StudentService {
         return studentRepository.findAll().stream()
                 .collect(Collectors.averagingInt(Student::getAge));
     }
+
+    public List<Student> treadTest() {
+        List<Student> listStudents = studentRepository.findAll().stream().sorted(Comparator.comparing(Student::getId)).collect(Collectors.toList());
+        System.out.println(listStudents.get(0).getName());
+        System.out.println(listStudents.get(1).getName());
+        new Thread(() -> {
+            System.out.println(listStudents.get(2).getName());
+            System.out.println(listStudents.get(3).getName());
+        }).start();
+        new Thread(() -> {
+            System.out.println(listStudents.get(4).getName());
+            System.out.println(listStudents.get(5).getName());
+        }).start();
+        return listStudents;
+    }
+
+    public synchronized List<Student> synchronizeTreadTest() {
+        List<Student> listStudents2 = studentRepository.findAll().stream()
+                .sorted(Comparator.comparing(Student::getId))
+                .collect(Collectors.toList());
+        synchronizeTread(List.of(listStudents2.get(0), listStudents2.get(1)));
+        new Thread(() -> synchronizeTread(List.of(listStudents2.get(2), listStudents2.get(3)))).start();
+        new Thread(() -> synchronizeTread(List.of(listStudents2.get(4), listStudents2.get(5)))).start();
+        return listStudents2;
+
+    }
+
+    public static synchronized void synchronizeTread(List<Student>listS) {
+        System.out.println(listS.get(0).getName());
+        System.out.println(listS.get(1).getName());
+    }
 }
+
 

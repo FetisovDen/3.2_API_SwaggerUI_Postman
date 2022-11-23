@@ -76,5 +76,16 @@ public class StudentController {
         Double avgAgeAllStudentsStudents = studentService.getAvgAgeAllStudents();
         return ResponseEntity.ok(avgAgeAllStudentsStudents);
     }
+    @GetMapping("/treadTest")
+    public ResponseEntity<List<Student>> treadTest() {
+        List<Student> treadTest = studentService.treadTest();
+        return ResponseEntity.ok(treadTest);
+    }
+    @GetMapping("/synchronizeTreadTest")
+    public ResponseEntity<List<Student>> synchronizeTreadTest() {
+        List<Student> treadTest = studentService.synchronizeTreadTest();
+        return ResponseEntity.ok(treadTest);
+    }
+
 
 }
