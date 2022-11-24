@@ -112,7 +112,7 @@ public class StudentService {
         return listStudents;
     }
 
-    public synchronized List<Student> synchronizeTreadTest() {
+    public  List<Student> synchronizeTreadTest() {
         List<Student> listStudents2 = studentRepository.findAll().stream()
                 .sorted(Comparator.comparing(Student::getId))
                 .collect(Collectors.toList());
